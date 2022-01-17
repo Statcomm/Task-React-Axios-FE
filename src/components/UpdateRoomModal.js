@@ -1,5 +1,6 @@
 import { Modal, Button, InputGroup, Form } from 'react-bootstrap';
 import React, { useState } from 'react';
+import axios from "axios";
 
 
 export default function UpdateRoomModal(props) {
@@ -12,8 +13,15 @@ export default function UpdateRoomModal(props) {
   const handleChange = (event) => {
     setRoom({ ...room, [event.target.name]: event.target.value });
   };
-  const handleSubmit = (event) => {
-
+  const handleSubmit = async (event) => {
+    try{ 
+      handleChange(event)
+    await axios.put(`https://coded-task-axios-be.herokuapp.com/rooms/${props.room.id}`)
+    } catch (error) {
+      console.log(error);
+      alert("Failed to update room!")
+    }
+  
     props.closeModal();
   };
   return (
